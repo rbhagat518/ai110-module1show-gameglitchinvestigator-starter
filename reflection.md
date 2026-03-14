@@ -42,6 +42,14 @@ Copilot provided in depth analysis of my tests and helped explain the importance
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
 - What change did you make that finally gave the game a stable secret number?
 
+The secret number was being regenerated every time the script ran. 
+
+Every time you do something on the page (like typing in a box, clicking a button, or even just refreshing), it doesn't just update that one part; it reruns the entire Python script from top to bottom.
+
+The fix was to save the number as part of the streamlit session state, more specifically 
+if "secret" not in st.session_state:
+    st.session_state.secret = random.randint(low, high)
+    
 ---
 
 ## 5. Looking ahead: your developer habits
@@ -50,3 +58,9 @@ Copilot provided in depth analysis of my tests and helped explain the importance
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
+Asking AI to explain functionality.
+Ask for it double check dependency functionality throughout the whole codebase. I noticed that after refactoring the codebase, it wasn't aware about updating the testing scripts, a critical aspect of functioanlity. I'll keep in mind to keep the dependency interactions for the future.
+New perspective: AI geenerated is a great learning tool, but isn't perfect, especially with accoutnting for dependencies throughout the codebase.
+
+
