@@ -60,19 +60,16 @@ def check_guess(guess, secret):
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
     """Update score based on outcome and attempt number."""
-    # FIX: Refactored score logic using agent mode
+    # Fix: Revised scoring: deduct points for each attempt, bonus for winning with fewer attempts
     if outcome == "Win":
-        points = 100 - 10 * (attempt_number + 1)
-        if points < 10:
-            points = 10
+        # Base win bonus minus penalty for attempts used
+        win_bonus = 100
+        attempt_penalty = 10 * attempt_number
+        points = max(10, win_bonus - attempt_penalty)  # Minimum 10 points for win
         return current_score + points
 
-    if outcome == "Too High":
-        if attempt_number % 2 == 0:
-            return current_score + 5
-        return current_score - 5
-
-    if outcome == "Too Low":
+    # Deduct points for incorrect guesses
+    if outcome in ["Too High", "Too Low"]:
         return current_score - 5
 
     return current_score
